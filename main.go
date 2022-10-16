@@ -1,19 +1,22 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"sort"
 	"strings"
 )
 
 func main() {
-	text := "Sample Case"
-	vow, con := sortChar(text)
-	fmt.Println("Vowels Characters : ", vow)
-	fmt.Println("Consonant Characters : ", con)
+	fmt.Println("Vowels Characters : ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	text := scanner.Text()
 
-	text = "Next Case"
-	vow, con = sortChar(text)
+	fmt.Println(text)
+
+	vow, con := sortChar(text)
 	fmt.Println("Vowels Characters : ", vow)
 	fmt.Println("Consonant Characters : ", con)
 
@@ -135,7 +138,6 @@ func sortChar(text string) (string, string) {
 			Sort:  v.Sort,
 		})
 	}
-
 	sort.Slice(sortedVowels, func(i, j int) bool {
 		return sortedVowels[i].Sort < sortedVowels[j].Sort
 	})
@@ -147,7 +149,6 @@ func sortChar(text string) (string, string) {
 			Sort:  v.Sort,
 		})
 	}
-
 	sort.Slice(sortedConsonant, func(i, j int) bool {
 		return sortedConsonant[i].Sort < sortedConsonant[j].Sort
 	})

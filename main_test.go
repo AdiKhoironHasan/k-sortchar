@@ -7,8 +7,8 @@ type sortCharTest struct {
 }
 
 var sortCharTests = []sortCharTest{
-	sortCharTest{"Sample Case", "aaee", "ssmplc"},
-	sortCharTest{"Next Case", "eea", "nxtcs"},
+	{"Sample Case", "aaee", "ssmplc"},
+	{"Next Case", "eea", "nxtcs"},
 }
 
 func TestSortChar(t *testing.T) {
