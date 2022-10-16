@@ -15,7 +15,6 @@ func main() {
 	text := scanner.Text()
 
 	fmt.Println(text)
-
 	vow, con := sortChar(text)
 	fmt.Println("Vowels Characters : ", vow)
 	fmt.Println("Consonant Characters : ", con)
@@ -34,91 +33,45 @@ func sortChar(text string) (string, string) {
 
 	vowelsMap := make(map[string]data)
 	consonantMap := make(map[string]data)
+	var vowels string
+	var consonant string
+	var sortedConsonant []data
+	var sortedVowels []data
 
-	sortVow := 1
-	sortCon := 1
+	order := 1
+
+	var vowelChars = map[string]bool{
+		"a": true,
+		"e": true,
+		"i": true,
+		"o": true,
+		"u": true,
+	}
 
 	for _, val := range text {
+		v := fmt.Sprint(string(val))
+		ok := vowelChars[v]
 
-		switch val {
-		case 'a':
-			if val, ok := vowelsMap["a"]; !ok {
-				vowelsMap["a"] = data{
-					Sort:  sortVow,
+		if ok {
+			if val, ok := vowelsMap[v]; !ok {
+				vowelsMap[v] = data{
+					Sort:  int(order),
 					Value: 1,
 				}
-				sortVow++
+				order++
 			} else {
-				vowelsMap["a"] = data{
+				vowelsMap[v] = data{
 					Sort:  val.Sort,
 					Value: val.Value + 1,
 				}
 			}
-
-		case 'e':
-			if val, ok := vowelsMap["e"]; !ok {
-				vowelsMap["e"] = data{
-					Sort:  sortVow,
-					Value: 1,
-				}
-				sortVow++
-			} else {
-				vowelsMap["e"] = data{
-					Sort:  val.Sort,
-					Value: val.Value + 1,
-				}
-			}
-
-		case 'i':
-			if val, ok := vowelsMap["i"]; !ok {
-				vowelsMap["i"] = data{
-					Sort:  sortVow,
-					Value: 1,
-				}
-				sortVow++
-			} else {
-				vowelsMap["i"] = data{
-					Sort:  val.Sort,
-					Value: val.Value + 1,
-				}
-			}
-
-		case 'o':
-			if val, ok := vowelsMap["o"]; !ok {
-				vowelsMap["o"] = data{
-					Sort:  sortVow,
-					Value: 1,
-				}
-				sortVow++
-			} else {
-				vowelsMap["o"] = data{
-					Sort:  val.Sort,
-					Value: val.Value + 1,
-				}
-			}
-
-		case 'u':
-			if val, ok := vowelsMap["u"]; !ok {
-				vowelsMap["u"] = data{
-					Sort:  sortVow,
-					Value: 1,
-				}
-				sortVow++
-			} else {
-				vowelsMap["u"] = data{
-					Sort:  val.Sort,
-					Value: val.Value + 1,
-				}
-			}
-
-		default:
-			v := fmt.Sprint(string(val))
+		} else {
 			if val, ok := consonantMap[v]; !ok {
 				consonantMap[v] = data{
-					Sort:  int(sortCon),
+					Sort:  int(order),
 					Value: 1,
 				}
-				sortCon++
+				order++
 			} else {
 				consonantMap[v] = data{
 					Sort:  val.Sort,
@@ -127,9 +80,6 @@ func sortChar(text string) (string, string) {
 			}
 		}
 	}
-
-	var sortedConsonant []data
-	var sortedVowels []data
 
 	for k, v := range vowelsMap {
 		sortedVowels = append(sortedVowels, data{
@@ -153,11 +103,6 @@ func sortChar(text string) (string, string) {
 		return sortedConsonant[i].Sort < sortedConsonant[j].Sort
 	})
 
-	// fmt.Println(sortedVowels)
-	// fmt.Println(sortedConsonant)
-
-	var vowels string
-	var consonant string
 	for _, val := range sortedVowels {
 		for i := 0; i < val.Value; i++ {
 			vowels = fmt.Sprintf(vowels + val.Key)

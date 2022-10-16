@@ -12,13 +12,13 @@ var sortCharTests = []sortCharTest{
 }
 
 func TestSortChar(t *testing.T) {
-	for i := 0; i < 100000; i++ {
-		for _, test := range sortCharTests {
-			if outputVow, outputCon := sortChar(test.argument); outputVow+outputCon != test.vowels+test.consonant {
-				t.Errorf("Output %q not equal to expected %q", outputVow+outputCon, test.vowels+test.consonant)
-			}
+	// for i := 0; i < 100000; i++ {
+	for _, test := range sortCharTests {
+		if outputVow, outputCon := sortChar(test.argument); outputVow+outputCon != test.vowels+test.consonant {
+			t.Errorf("Output %q not equal to expected %q", outputVow+outputCon, test.vowels+test.consonant)
 		}
 	}
+	// }
 }
 
 func BenchmarSortChar(b *testing.B) {
