@@ -34,9 +34,10 @@ func sortChar(text string) (string, string) {
 
 	sortVow := 1
 	sortCon := 1
-	for _, val := range text {
-		switch val {
 
+	for _, val := range text {
+
+		switch val {
 		case 'a':
 			if val, ok := vowelsMap["a"]; !ok {
 				vowelsMap["a"] = data{
