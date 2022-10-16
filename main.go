@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 )
 
@@ -23,16 +22,9 @@ func sortChar(text string) (string, string) {
 	text = strings.ToLower(text)
 	text = strings.ReplaceAll(text, " ", "")
 
-	type data struct {
-		Key   string
-		Sort  int64
-		Value int64
-	}
-
 	vowelsMap := make(map[string]int)
-	consonantMap := make(map[string]data)
+	consonantMap := make(map[string]int)
 
-	sortCon := 1
 	for _, val := range text {
 		switch val {
 		case 'a':
@@ -69,36 +61,15 @@ func sortChar(text string) (string, string) {
 		default:
 			v := fmt.Sprint(string(val))
 			if val, ok := consonantMap[v]; !ok {
-				consonantMap[v] = data{
-					Sort:  int64(sortCon),
-					Value: 1,
-				}
-				sortCon++
+				consonantMap[v] = 1
 			} else {
-				consonantMap[v] = data{
-					Sort:  val.Sort,
-					Value: val.Value + 1,
-				}
+				consonantMap[v] = val + 1
 			}
 		}
 	}
 
-	var sortedConsonant []data
-
-	for k, v := range consonantMap {
-		sortedConsonant = append(sortedConsonant, data{
-			Key:   k,
-			Value: v.Value,
-			Sort:  v.Sort,
-		})
-	}
-
-	sort.Slice(sortedConsonant, func(i, j int) bool {
-		return sortedConsonant[i].Sort < sortedConsonant[j].Sort
-	})
-
 	// fmt.Println(vowelsMap)
-	// fmt.Println(sortedConsonant)
+	// fmt.Println(consonantMap)
 
 	var vowels string
 	var consonant string
@@ -107,10 +78,9 @@ func sortChar(text string) (string, string) {
 			vowels = fmt.Sprintf(vowels + key)
 		}
 	}
-
-	for _, val := range sortedConsonant {
-		for i := 0; i < int(val.Value); i++ {
-			consonant = fmt.Sprintf(consonant + val.Key)
+	for key, val := range consonantMap {
+		for i := 0; i < val; i++ {
+			consonant = fmt.Sprintf(consonant + key)
 		}
 	}
 
