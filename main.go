@@ -36,65 +36,73 @@ func sortChar(text string) (string, string) {
 	sortCon := 1
 	for _, val := range text {
 		switch val {
+
 		case 'a':
 			if val, ok := vowelsMap["a"]; !ok {
 				vowelsMap["a"] = data{
 					Sort:  sortVow,
 					Value: 1,
 				}
+				sortVow++
 			} else {
 				vowelsMap["a"] = data{
-					Sort:  sortVow,
+					Sort:  val.Sort,
 					Value: val.Value + 1,
 				}
 			}
 
-			sortVow++
 		case 'e':
 			if val, ok := vowelsMap["e"]; !ok {
 				vowelsMap["e"] = data{
 					Sort:  sortVow,
 					Value: 1,
 				}
+				sortVow++
 			} else {
 				vowelsMap["e"] = data{
-					Sort:  sortVow,
+					Sort:  val.Sort,
 					Value: val.Value + 1,
 				}
 			}
+
 		case 'i':
 			if val, ok := vowelsMap["i"]; !ok {
 				vowelsMap["i"] = data{
 					Sort:  sortVow,
 					Value: 1,
 				}
+				sortVow++
 			} else {
 				vowelsMap["i"] = data{
-					Sort:  sortVow,
+					Sort:  val.Sort,
 					Value: val.Value + 1,
 				}
 			}
+
 		case 'o':
 			if val, ok := vowelsMap["o"]; !ok {
 				vowelsMap["o"] = data{
 					Sort:  sortVow,
 					Value: 1,
 				}
+				sortVow++
 			} else {
 				vowelsMap["o"] = data{
-					Sort:  sortVow,
+					Sort:  val.Sort,
 					Value: val.Value + 1,
 				}
 			}
+
 		case 'u':
 			if val, ok := vowelsMap["u"]; !ok {
 				vowelsMap["u"] = data{
 					Sort:  sortVow,
 					Value: 1,
 				}
+				sortVow++
 			} else {
 				vowelsMap["u"] = data{
-					Sort:  sortVow,
+					Sort:  val.Sort,
 					Value: val.Value + 1,
 				}
 			}
@@ -117,6 +125,19 @@ func sortChar(text string) (string, string) {
 	}
 
 	var sortedConsonant []data
+	var sortedVowels []data
+
+	for k, v := range vowelsMap {
+		sortedVowels = append(sortedVowels, data{
+			Key:   k,
+			Value: v.Value,
+			Sort:  v.Sort,
+		})
+	}
+
+	sort.Slice(sortedVowels, func(i, j int) bool {
+		return sortedVowels[i].Sort < sortedVowels[j].Sort
+	})
 
 	for k, v := range consonantMap {
 		sortedConsonant = append(sortedConsonant, data{
@@ -130,14 +151,14 @@ func sortChar(text string) (string, string) {
 		return sortedConsonant[i].Sort < sortedConsonant[j].Sort
 	})
 
-	// fmt.Println(vowelsMap)
+	// fmt.Println(sortedVowels)
 	// fmt.Println(sortedConsonant)
 
 	var vowels string
 	var consonant string
-	for key, val := range vowelsMap {
+	for _, val := range sortedVowels {
 		for i := 0; i < val.Value; i++ {
-			vowels = fmt.Sprintf(vowels + key)
+			vowels = fmt.Sprintf(vowels + val.Key)
 		}
 	}
 
